@@ -1,78 +1,129 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UNDO — We fix what AI gets wrong</title><meta name="description" content="UNDO investigates legitimate recovery options when an AI agent makes a costly purchase or booking mistake."><link rel="stylesheet" href="styles.css"></head><body>
-<header class="nav"><a class="logo" href="#top"><span class="logo-mark">U</span> UNDO</a><nav><a href="#how">How it works</a><a class="nav-cta" href="#case">Submit a case</a></nav></header>
-<main id="top"><section class="hero"><div class="hero-copy"><div class="eyebrow"><span class="dot"></span> PRIVATE BETA · AI TRANSACTION RECOVERY</div><h1>When AI gets it wrong, <em>we fix it.</em></h1><p class="sub">An AI agent ordered the wrong thing, booked the wrong date, or created a charge you didn't intend? UNDO investigates legitimate recovery options and helps you pursue the fix.</p><div class="hero-actions"><a class="cta" href="#case">Submit a case <span>↗</span></a><span class="note">Free case review in beta.</span></div><div class="trust-row"><span>Human-reviewed</span><span>•</span><span>Legitimate recovery only</span><span>•</span><span>No passwords</span></div></div><div class="hero-card"><div class="card-top"><span class="status"><i></i> CASE PREVIEW</span><span>UNDO-0001</span></div><div class="case-problem">AI bought the <strong>wrong laptop</strong></div><div class="case-line"><span>You asked</span><b>15" · 512 GB</b></div><div class="case-line"><span>It ordered</span><b>15" · 256 GB</b></div><div class="divider"></div><div class="recovery"><span>Recovery route</span><strong>Return + replacement</strong></div><div class="card-footer">We investigate first. You approve any action.</div></div></section>
-<section id="how" class="section how"><div class="section-head"><div><div class="eyebrow">THE PROCESS</div><h2>Simple for you.<br>Serious behind the scenes.</h2></div><p>AI handles case reconstruction and research. A human reviews consequential actions before they happen.</p></div><div class="steps"><article><span>01</span><h3>Tell us what happened</h3><p>Give us the original instruction, what the agent did, the merchant and your desired fix.</p></article><article><span>02</span><h3>We reconstruct it</h3><p>We compare the requested action with the transaction and identify plausible recovery routes.</p></article><article><span>03</span><h3>We pursue the fix</h3><p>Where a legitimate path exists, we prepare the next step and ask for approval before anything consequential.</p></article><article><span>04</span><h3>You pay on recovery</h3><p>For eligible cases, the beta fee is 25% of value actually recovered. No recovery means no success fee.</p></article></div></section>
-<section class="section examples"><div class="section-head compact"><div><div class="eyebrow">BETA SCOPE</div><h2>Cases we can investigate</h2></div><p>We're starting narrow so we learn what can be recovered reliably.</p></div><div class="chips"><span>Wrong item</span><span>Duplicate order</span><span>Wrong quantity</span><span>Unwanted subscription</span><span>Bad booking</span><span>Missed cancellation</span></div></section>
-<section id="case" class="section case-wrap"><div class="case-intro"><div class="eyebrow">PRIVATE BETA</div><h2>Think an AI agent made a costly mistake?</h2><p>Send the facts. We'll tell you whether the case looks worth pursuing before asking you to pay.</p><div class="privacy-box"><strong>Keep it safe.</strong><br>Never send passwords, full card numbers, security codes or government IDs.</div></div><div class="form-card"><form id="caseForm"><div class="form-grid"><label>Name<input name="name" autocomplete="name" required placeholder="Your name"></label><label>Email<input type="email" name="email" autocomplete="email" required placeholder="you@example.com"></label></div><label>Merchant / service<input name="merchant" required placeholder="e.g. retailer, airline, hotel"></label><div class="form-grid"><label>Amount involved (€)<input type="number" name="amount" min="0" step="0.01" placeholder="0.00"></label><label>When did it happen?<input type="date" name="date"></label></div><label>What did you ask the AI to do?<textarea name="instruction" required placeholder="Paste or describe the original instruction…"></textarea></label><label>What did the AI actually do?<textarea name="outcome" required placeholder="What happened instead?"></textarea></label><label>What would you like recovered or fixed?<textarea name="desired_outcome" required placeholder="Refund, cancellation, replacement, correction, etc."></textarea></label><button type="submit">Request a case review <span>↗</span></button><p class="form-note">Beta intake only. UNDO does not guarantee recovery and is not a law firm.</p><div class="success" id="success" hidden></div></form></div></section></main><footer><div>UNDO</div><span>AI transaction recovery · Private beta</span></footer>
-<script>
-const SUPABASE_URL = "https://xbjmgtvxevsaciswbepf.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_a9vOeDsGkvTygc95Qhi2LQ_YYBz_r8X";
-const form = document.getElementById('caseForm');
-const success = document.getElementById('success');
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNDO — AI mistake recovery</title>
+  <meta name="description" content="Tell UNDO what your AI got wrong. We investigate legitimate ways to fix it." />
+  <style>
+    :root{--bg:#f5f3ee;--ink:#171716;--muted:#66645f;--card:#fff;--line:#dedbd3;--dark:#171716;--soft:#ebe8e0;--ok:#17643d;--err:#a32626}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    a{color:inherit}
+    .nav{max-width:1120px;margin:auto;padding:24px 28px;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;letter-spacing:-.04em;font-size:22px}.nav a{text-decoration:none;font-size:14px;color:var(--muted)}
+    .hero{max-width:1120px;margin:60px auto 0;padding:0 28px 90px;display:grid;grid-template-columns:1.05fr .95fr;gap:72px;align-items:center}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#77736b;margin-bottom:18px}.hero h1{font-size:clamp(56px,7vw,92px);line-height:.9;letter-spacing:-.075em;margin:0 0 26px;max-width:760px}.hero h1 span{color:#8a877f}.hero p{font-size:18px;color:var(--muted);max-width:620px}.cta{display:inline-flex;background:var(--dark);color:#fff;padding:13px 18px;border-radius:9px;text-decoration:none;font-weight:700;font-size:14px;margin-top:14px}.micro{font-size:12px!important;color:#8a877f!important;margin-top:14px}
+    .preview{background:#191918;color:#fff;border-radius:22px;padding:28px;box-shadow:0 26px 70px rgba(0,0,0,.14);transform:rotate(2deg)}.preview-top{font-size:10px;letter-spacing:.13em;color:#8f8e87;text-transform:uppercase}.preview h2{font-size:30px;line-height:1.0;letter-spacing:-.04em;margin:58px 0 26px}.row{display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid #33332f;font-size:13px}.pill{padding:5px 8px;border-radius:999px;background:#2c2c27;font-size:11px;color:#d7d5cc}
+    .section{max-width:1120px;margin:auto;padding:28px 28px 100px}.section h3{font-size:28px;letter-spacing:-.04em;margin:0 0 16px}.section-intro{color:var(--muted);max-width:700px;margin-bottom:28px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}.num{font-size:11px;color:#89857d;font-weight:700}.step h4{font-size:18px;margin:30px 0 8px}.step p{color:var(--muted);font-size:14px}
+    .form-wrap{background:var(--dark);color:#fff;border-radius:24px;padding:34px;display:grid;grid-template-columns:.8fr 1.2fr;gap:36px}.form-wrap p{color:#b8b7af}.form-wrap h3{font-size:38px;line-height:.98;margin:0 0 16px}.form{display:grid;gap:12px}.field{display:grid;gap:7px}.field label{font-size:12px;color:#b8b7af}.field input,.field textarea,.field select{width:100%;padding:13px 14px;border-radius:10px;border:1px solid #3e3e39;background:#232321;color:#fff;font:inherit;outline:none}.field textarea{min-height:120px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:#8a897f}.btn{margin-top:4px;border:0;background:#fff;color:#111;padding:14px;border-radius:10px;font-weight:800;cursor:pointer}.btn:disabled{opacity:.6;cursor:wait}.note{font-size:11px;color:#89877f;line-height:1.5}.msg{display:none;padding:12px 14px;border-radius:10px;font-size:13px}.msg.show{display:block}.success{background:#dff1e7;color:var(--ok)}.error{background:#ffe1e1;color:var(--err)}
+    footer{max-width:1120px;margin:auto;padding:0 28px 40px;color:#8a877f;font-size:12px;display:flex;justify-content:space-between;gap:20px}
+    @media(max-width:800px){.hero,.form-wrap{grid-template-columns:1fr}.hero{margin-top:25px;gap:35px}.preview{transform:none}.steps{grid-template-columns:1fr}.hero h1{font-size:58px}.form-wrap{padding:24px}.section{padding-bottom:70px}}
+  </style>
+</head>
+<body>
+  <nav class="nav"><div class="brand">UNDO</div><a href="#submit">Submit a case</a></nav>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Private beta · AI transaction recovery</div>
+        <h1>When AI gets it <span>wrong,</span> we fix it.</h1>
+        <p>Tell us what an AI agent did, what you asked it to do, and what you want fixed. UNDO investigates legitimate recovery options and helps you pursue the fix.</p>
+        <a class="cta" href="#submit">Submit a case</a>
+        <p class="micro">Human-reviewed · Legitimate recovery only · No passwords</p>
+      </div>
+      <div class="preview">
+        <div class="preview-top">Case preview · UNDO-0001</div>
+        <h2>AI bought the<br>wrong laptop</h2>
+        <div class="row"><span>You asked</span><span class="pill">15” · 512 GB</span></div>
+        <div class="row"><span>It ordered</span><span class="pill">15” · 256 GB</span></div>
+        <div class="row"><span>Recovery route</span><span class="pill">Return + replacement</span></div>
+      </div>
+    </section>
 
-function showMessage(title, detail='') {
-  success.innerHTML = `<strong>${title}</strong>${detail ? `<br>${detail}` : ''}`;
-  success.hidden = false;
-  success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
+    <section class="section">
+      <h3>How it works</h3>
+      <p class="section-intro">We're starting with a narrow promise: understand the mistake, find a legitimate route, and help you take the next step.</p>
+      <div class="steps">
+        <div class="step"><div class="num">01</div><h4>Tell us what happened</h4><p>Explain the original instruction, the action the agent took, and the outcome you want.</p></div>
+        <div class="step"><div class="num">02</div><h4>We investigate</h4><p>UNDO checks the facts, relevant policies and realistic recovery routes. No guaranteed refunds.</p></div>
+        <div class="step"><div class="num">03</div><h4>We help pursue the fix</h4><p>Where a legitimate route exists, we prepare the next action and keep a record of the case.</p></div>
+      </div>
+    </section>
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = form.querySelector('button');
-  btn.disabled = true;
-  btn.textContent = 'Submitting…';
-  success.hidden = true;
+    <section class="section" id="submit">
+      <div class="form-wrap">
+        <div>
+          <div class="eyebrow" style="color:#8f8e87">Start a case</div>
+          <h3>Let's see what happened.</h3>
+          <p>Beta review is free. We only discuss a success fee if there is a real recovery and you agree to it.</p>
+        </div>
+        <form class="form" id="caseForm">
+          <div class="field"><label for="name">Your name</label><input id="name" name="customer_name" required maxlength="120" autocomplete="name"></div>
+          <div class="field"><label for="email">Your email</label><input id="email" name="customer_email" required type="email" maxlength="200" autocomplete="email"></div>
+          <div class="field"><label for="merchant">Merchant / service</label><input id="merchant" name="merchant" required maxlength="160" placeholder="e.g. Amazon, Booking, airline"></div>
+          <div class="field"><label for="amount">Amount involved (€)</label><input id="amount" name="amount" required type="number" min="0" step="0.01" placeholder="100"></div>
+          <div class="field"><label for="problem">What did the AI do?</label><textarea id="problem" name="problem" required maxlength="4000" placeholder="What you asked the AI to do vs. what it actually did..."></textarea></div>
+          <div class="field"><label for="outcome">What would you like fixed?</label><textarea id="outcome" name="requested_outcome" required maxlength="2000" placeholder="e.g. refund, cancellation, replacement..."></textarea></div>
+          <div class="msg success" id="successMsg"></div>
+          <div class="msg error" id="errorMsg"></div>
+          <button class="btn" id="submitBtn" type="submit">Submit case</button>
+          <div class="note">Please do not include passwords, full card numbers, authentication codes or other secrets. By submitting, you agree that UNDO may use the information provided to review the case.</div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer><span>UNDO · Private beta</span><span>Legitimate recovery only. No guaranteed outcome.</span></footer>
 
-  const payload = Object.fromEntries(new FormData(form).entries());
-  const amount = Math.max(0, Number(payload.amount || 0));
-  const date = String(payload.date || '').trim();
-  const instruction = String(payload.instruction || '').trim().slice(0, 10000);
-  const outcome = String(payload.outcome || '').trim().slice(0, 10000);
-  const desired = String(payload.desired_outcome || '').trim().slice(0, 10000);
+  <script>
+    const SUPABASE_URL = 'https://xbjmgtvxevsaciswbepf.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_a9vOeDsGkvTygc95Qhi2LQ_YYBz_r8X';
+    const ENDPOINT = `${SUPABASE_URL}/rest/v1/cases`;
+    const form = document.getElementById('caseForm');
+    const btn = document.getElementById('submitBtn');
+    const ok = document.getElementById('successMsg');
+    const err = document.getElementById('errorMsg');
 
-  const row = {
-    customer_name: String(payload.name || '').trim().slice(0, 200),
-    customer_email: String(payload.email || '').trim().toLowerCase().slice(0, 320),
-    merchant: String(payload.merchant || '').trim().slice(0, 300),
-    amount,
-    currency: 'EUR',
-    problem: `Original instruction:\n${instruction}\n\nActual outcome:\n${outcome}${date ? `\n\nDate reported: ${date}` : ''}`,
-    requested_outcome: desired,
-    status: 'new',
-    recovered_amount: 0,
-    recovery_fee: 0
-  };
+    function show(el, text){ el.textContent = text; el.classList.add('show'); }
+    function hide(el){ el.classList.remove('show'); el.textContent=''; }
 
-  try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/cases`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_PUBLISHABLE_KEY,
-        'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify(row)
-    });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hide(ok); hide(err); btn.disabled = true; btn.textContent = 'Submitting…';
+      const amount = Number(document.getElementById('amount').value);
+      const payload = {
+        customer_name: document.getElementById('name').value.trim(),
+        customer_email: document.getElementById('email').value.trim(),
+        merchant: document.getElementById('merchant').value.trim(),
+        amount: Number.isFinite(amount) ? amount : null,
+        currency: 'EUR',
+        problem: document.getElementById('problem').value.trim(),
+        requested_outcome: document.getElementById('outcome').value.trim(),
+        status: 'new'
+      };
 
-    const text = await response.text();
-    if (!response.ok) {
-      let message = text || `Supabase returned HTTP ${response.status}`;
       try {
-        const parsed = JSON.parse(text);
-        message = parsed.message || parsed.hint || parsed.error || message;
-      } catch {}
-      throw new Error(message);
-    }
-
-    form.reset();
-    showMessage('Case received', 'We received your case successfully.');
-  } catch (err) {
-    console.error('UNDO submission failed:', err);
-    showMessage('Couldn’t submit.', String(err?.message || err));
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = 'Request a case review <span>↗</span>';
-  }
-});
-</script></body></html>
+        const response = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_PUBLISHABLE_KEY,
+            'Authorization': `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) {
+          let detail = `Supabase returned HTTP ${response.status}.`;
+          try { const body = await response.json(); if (body?.message) detail += ` ${body.message}`; else if (body?.hint) detail += ` ${body.hint}`; else if (body?.error) detail += ` ${body.error}`; } catch {}
+          throw new Error(detail);
+        }
+        form.reset();
+        show(ok, 'Case received. We have your submission and will review it.');
+      } catch (ex) {
+        console.error(ex);
+        show(err, `Couldn’t submit: ${ex.message}`);
+      } finally {
+        btn.disabled = false; btn.textContent = 'Submit case';
+      }
+    });
+  </script>
+</body>
+</html>
