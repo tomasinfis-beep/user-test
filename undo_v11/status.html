@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UNDO — Case status</title>
+<meta name="description" content="Check the status of your UNDO recovery case.">
+<link rel="stylesheet" href="styles.css">
+<style>
+.status-shell{max-width:760px;margin:70px auto 100px}.status-card{background:#fff;border:1px solid var(--line);border-radius:28px;padding:32px}.status-card h1{font-size:clamp(40px,7vw,64px);letter-spacing:-.04em;margin:8px 0 12px}.status-card>p{color:var(--muted);line-height:1.6}.status-form{margin-top:28px;display:grid;gap:16px}.status-form label{display:grid;gap:8px;font-size:14px;font-weight:600}.status-form input{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;font:inherit}.status-form input:focus{outline:2px solid #1112}.status-result{margin-top:24px;background:#f7f5ef;border-radius:22px;padding:22px;display:none}.status-result.show{display:block}.status-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.status-pill{background:#111;color:#fff;border-radius:999px;padding:9px 13px;font-size:13px;text-transform:capitalize;white-space:nowrap}.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.status-grid>div{background:#fff;border-radius:16px;padding:15px}.status-grid span{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.msg{min-height:20px;font-size:14px}.msg.error{color:#b42318}.msg.success{color:#176b3a}.micro-copy{color:var(--muted);font-size:13px;line-height:1.5;margin-top:14px}@media(max-width:700px){.status-shell{margin-top:36px}.status-card{padding:22px}.status-grid{grid-template-columns:1fr}.status-head{flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="site-nav wrap"><a class="brand" href="index.html"><span class="brand-mark">U</span><span>UNDO</span></a><nav><a href="index.html#how">How it works</a><a class="nav-pill" href="index.html#submit">Start a case <span>↗</span></a></nav></header>
+<main class="wrap status-shell">
+<section class="status-card">
+<div class="eyebrow">CUSTOMER STATUS</div>
+<h1>Track your case.</h1>
+<p>Enter the UNDO case number from your confirmation and the email address used when you submitted the case.</p>
+<form id="statusForm" class="status-form">
+<label>Case number<input id="caseId" required placeholder="UNDO-000001" autocomplete="off"></label>
+<label>Email<input id="email" type="email" required placeholder="you@example.com" autocomplete="email"></label>
+<div id="msg" class="msg" role="status" aria-live="polite"></div>
+<button id="btn" class="btn btn-dark" type="submit">Check status <span>↗</span></button>
+</form>
+<div id="result" class="status-result">
+<div class="status-head"><div><div class="eyebrow">CASE</div><h2 id="caseNumber" style="margin:6px 0"></h2><p id="merchant" style="margin:0;color:var(--muted)"></p></div><span id="status" class="status-pill"></span></div>
+<div class="status-grid"><div><span>Original amount</span><strong id="amount"></strong></div><div><span>Recovered</span><strong id="recovered"></strong></div><div><span>Last updated</span><strong id="updated"></strong></div></div>
+<p class="micro-copy">Status updates are provided for information only. Recovery depends on the merchant, payment provider and other parties involved.</p>
+</div>
+</section>
+</main>
+<footer class="wrap"><span>UNDO · Private beta</span><span>© 2026 UNDO</span></footer>
+<script>
+const form=document.getElementById('statusForm'),btn=document.getElementById('btn'),msg=document.getElementById('msg'),result=document.getElementById('result');
+const money=n=>new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR'}).format(Number(n||0));
+const date=v=>v?new Intl.DateTimeFormat('en-GB',{dateStyle:'medium',timeStyle:'short'}).format(new Date(v)):'—';
+function setMsg(t,type=''){msg.className='msg '+type;msg.textContent=t}
+form.addEventListener('submit',async e=>{e.preventDefault();result.classList.remove('show');setMsg('Checking…');btn.disabled=true;try{const r=await fetch('/api/status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({case_id:document.getElementById('caseId').value,email:document.getElementById('email').value})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Could not check your case.');document.getElementById('caseNumber').textContent=j.case_number;document.getElementById('merchant').textContent=j.merchant||'Merchant/service';document.getElementById('status').textContent=String(j.status||'new').replace(/_/g,' ');document.getElementById('amount').textContent=money(j.amount);document.getElementById('recovered').textContent=money(j.recovered_amount);document.getElementById('updated').textContent=date(j.updated_at||j.created_at);result.classList.add('show');setMsg('Case found.','success')}catch(err){setMsg(err.message||'Could not check your case.','error')}finally{btn.disabled=false}});
+</script>
+</body>
+</html>
