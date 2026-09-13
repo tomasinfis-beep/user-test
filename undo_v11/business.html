@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UNDO for Businesses — AI incident recovery</title>
+<meta name="description" content="UNDO helps businesses investigate costly AI-agent mistakes and recover from real-world incidents.">
+<link rel="stylesheet" href="styles.css">
+<style>
+.biz-hero{padding:78px 0 90px;max-width:980px}.biz-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#827e75}.biz-hero h1{font-size:clamp(54px,7vw,94px);line-height:.9;letter-spacing:-.085em;margin:18px 0 24px;max-width:900px}.biz-hero h1 i{font-style:normal;color:#8a877f}.biz-lead{font-size:19px;line-height:1.55;color:var(--muted);max-width:720px}.biz-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 90px}.biz-card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:24px;min-height:180px}.biz-card span{font-size:11px;font-weight:800;color:#8f8b82;letter-spacing:.12em}.biz-card h3{font-size:24px;letter-spacing:-.04em;margin:38px 0 8px}.biz-card p{color:var(--muted);margin:0}.biz-form-shell{background:var(--dark);color:white;border-radius:28px;padding:34px;display:grid;grid-template-columns:.85fr 1.15fr;gap:38px;margin-bottom:100px}.biz-form-copy h2{font-size:clamp(40px,5vw,62px);line-height:.95;letter-spacing:-.07em;margin:12px 0 18px}.biz-form-copy p{color:#b9b6ad;max-width:460px}.biz-proof{margin-top:34px;display:grid;gap:8px;color:#aaa79f;font-size:12px}.biz-form{background:#211f1d;border:1px solid #373632;border-radius:20px;padding:22px}.biz-form form{display:grid;gap:12px}.biz-form label{display:grid;gap:7px;font-size:11px;color:#aaa79f;font-weight:700}.biz-form input,.biz-form textarea,.biz-form select{width:100%;border:1px solid #3a3935;background:#292824;color:white;border-radius:11px;padding:13px 14px;font:inherit;outline:none}.biz-form textarea{min-height:120px;resize:vertical}.biz-form input:focus,.biz-form textarea:focus,.biz-form select:focus{border-color:#9b9991}.biz-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.biz-note{font-size:10px;color:#7f7c74;line-height:1.5}.biz-msg{min-height:20px;font-size:12px}.biz-msg.ok{color:#bfe5cd}.biz-msg.err{color:#ffb1b1}.biz-cta{display:inline-flex;align-items:center;gap:10px;background:var(--dark);color:white;border-radius:12px;padding:14px 18px;font-weight:850;margin-top:24px}.biz-back{color:var(--muted)}
+@media(max-width:900px){.biz-grid,.biz-form-shell{grid-template-columns:1fr}.biz-form-shell{gap:26px}.biz-two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="site-nav wrap">
+<a class="brand" href="index.html"><span class="brand-mark">U</span><span>UNDO</span></a>
+<nav><a href="index.html">For people</a><a class="nav-pill" href="#incident">Submit an incident</a></nav>
+</header>
+<main class="wrap">
+<section class="biz-hero">
+<div class="biz-kicker">FOR BUSINESSES · AI INCIDENT RECOVERY</div>
+<h1>Your AI agent made a costly mistake.<br><i>We help clean it up.</i></h1>
+<p class="biz-lead">When an AI agent books the wrong thing, makes the wrong customer action, creates a payment problem or otherwise causes a costly incident, UNDO helps reconstruct what happened and identify a legitimate recovery path.</p>
+<a class="biz-cta" href="#incident">Send us an incident ↗</a>
+</section>
+<section class="biz-grid">
+<article class="biz-card"><span>01 · RECONSTRUCT</span><h3>What did the agent do?</h3><p>Separate the original instruction, the agent's actions and the real-world outcome.</p></article>
+<article class="biz-card"><span>02 · ASSESS</span><h3>What did it cost?</h3><p>Identify financial loss, customer impact, booking damage, duplicate actions or other measurable consequences.</p></article>
+<article class="biz-card"><span>03 · RECOVER</span><h3>What can actually be fixed?</h3><p>Map the legitimate route: merchant, platform, payment provider, account owner or another responsible party.</p></article>
+<article class="biz-card"><span>04 · REPORT</span><h3>Keep the evidence.</h3><p>We organize the timeline, evidence and next actions so your team can resolve the incident instead of starting from zero.</p></article>
+</section>
+<section id="incident" class="biz-form-shell">
+<div class="biz-form-copy">
+<div class="biz-kicker" style="color:#8f8c83">START A BETA CASE</div>
+<h2>Show us what went wrong.</h2>
+<p>There is no charge to submit an incident during the beta. We review the facts first and tell you whether the case looks worth pursuing.</p>
+<div class="biz-proof"><div>✓ AI / automation incidents</div><div>✓ Financial or operational impact</div><div>✓ Human-reviewed recovery route</div><div>✓ No guarantee — legitimate routes only</div></div>
+</div>
+<div class="biz-form">
+<form id="bizForm">
+<div class="biz-two">
+<label>Your name<input name="name" required maxlength="120" autocomplete="name" placeholder="Your name"></label>
+<label>Work email<input name="email" required maxlength="200" type="email" autocomplete="email" placeholder="you@company.com"></label>
+</div>
+<label>Company<input name="company" required maxlength="160" placeholder="Company name"></label>
+<div class="biz-two">
+<label>Incident type<select name="type"><option>Wrong booking / reservation</option><option>Payment or billing error</option><option>Wrong purchase / order</option><option>Customer-facing AI mistake</option><option>Account / access incident</option><option>Other AI automation incident</option></select></label>
+<label>Estimated impact (€)<input name="amount" type="number" min="0" step="0.01" placeholder="1000"></label>
+</div>
+<label>What happened?<textarea name="problem" required maxlength="10000" placeholder="What was the AI meant to do, what did it actually do, and what was the consequence?"></textarea></label>
+<label>What outcome do you want?<textarea name="outcome" required maxlength="3000" placeholder="Refund, reversal, correction, restored booking, customer resolution..."></textarea></label>
+<div id="bizMsg" class="biz-msg"></div>
+<button id="bizBtn" class="btn btn-light full" type="submit">Submit incident for review ↗</button>
+<div class="biz-note">Please do not include passwords, full payment-card numbers, authentication codes or government IDs.</div>
+</form>
+</div>
+</section>
+</main>
+<footer class="wrap"><span>UNDO · Private beta</span><span><a class="biz-back" href="index.html">Consumer cases</a> · © 2026 UNDO</span></footer>
+<script>
+const form=document.getElementById('bizForm'),btn=document.getElementById('bizBtn'),msg=document.getElementById('bizMsg');
+const qs=new URLSearchParams(location.search);const source=(qs.get('src')||'business').slice(0,120);let sid=localStorage.getItem('undo_session_id');if(!sid){sid=(crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2)}`);localStorage.setItem('undo_session_id',sid)}
+async function track(event,meta={}){try{await fetch('/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event,page:location.pathname,source,session_id:sid,referrer:document.referrer||'',meta})})}catch{}}
+track('page_view',{audience:'business'});
+document.querySelectorAll('a[href="#incident"]').forEach(a=>a.addEventListener('click',()=>track('cta_click',{label:a.textContent.trim(),audience:'business'})));
+form.querySelectorAll('input,textarea,select').forEach(el=>el.addEventListener('focus',()=>{if(!form.dataset.started){form.dataset.started='1';track('business_form_start')}},{once:true}));
+form.addEventListener('submit',async e=>{e.preventDefault();msg.className='biz-msg';msg.textContent='Submitting…';btn.disabled=true;const f=new FormData(form);const problem=`Business: ${String(f.get('company')||'').trim()}\nIncident type: ${String(f.get('type')||'').trim()}\n\n${String(f.get('problem')||'').trim()}`;const outcome=String(f.get('outcome')||'').trim();const amount=Math.max(0,Number(f.get('amount')||0)||0);try{const r=await fetch('/api/cases',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer_name:String(f.get('name')||'').trim(),customer_email:String(f.get('email')||'').trim().toLowerCase(),merchant:String(f.get('company')||'').trim(),amount,currency:'EUR',problem,requested_outcome:outcome,status:'new',recovered_amount:0,recovery_fee:0})});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Could not submit');await track('business_case_submitted',{case_number:j.case_number,company:String(f.get('company')||'').trim(),amount});form.reset();msg.className='biz-msg ok';msg.textContent=`Received. Case ${j.case_number} is now in review.`}catch(err){msg.className='biz-msg err';msg.textContent=err.message||'Could not submit. Please try again.'}finally{btn.disabled=false}});
+</script>
+</body>
+</html>
